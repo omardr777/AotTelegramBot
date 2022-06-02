@@ -41,7 +41,10 @@ bot.action('start', ctx => {
 
 const seasons = ['S1', 'S2', 'S3P1', 'S3P2', 'S4P1', 'S4P2']
 bot.action(seasons, (ctx) => {
-    ctx.deleteMessage();
+    try { ctx.deleteMessage(); }
+    catch (err) {
+        console.log(err)
+    }
     let season = ctx.match;
     let l = 0;
     console.log(season, typeof (season))
@@ -92,15 +95,19 @@ bot.action(seasons, (ctx) => {
                 ep
         }
     })
+
 })
 
 bot.action(episodes, (ctx) => {
+    ctx.answerCbQuery();
+
     ep = ctx.match;
     let epId;
     epId = epsID.find(e => e.episod === ep[0])
     if (epId != undefined)
         if (epId.type === 'mp4')
-            ctx.telegram.sendVideo(ctx.chat.id, epId.id)
+            return ctx.telegram.sendVideo(ctx.chat.id, epId.id)
+
         else
             ctx.telegram.sendDocument(ctx.chat.id, epId.id)
     else {//if epID is not defined
@@ -112,7 +119,10 @@ bot.action(episodes, (ctx) => {
 
 function sendStartMessage(ctx) {
     let startMessage = 'Choose a season';
-    ctx.deleteMessage();
+    try { ctx.deleteMessage(); }
+    catch (err) {
+        console.log(err)
+    }
     ctx.reply(startMessage, {
         "reply_markup": {
             'inline_keyboard': [
@@ -128,3 +138,4 @@ function sendStartMessage(ctx) {
 }
 
 bot.launch()
+
