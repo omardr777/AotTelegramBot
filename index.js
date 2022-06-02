@@ -40,8 +40,8 @@ bot.action('start', ctx => {
 })
 
 const seasons = ['S1', 'S2', 'S3P1', 'S3P2', 'S4P1', 'S4P2']
-bot.action(seasons, (ctx) => {
-    try { ctx.deleteMessage(); }
+bot.action(seasons, async (ctx) => {
+    try { await ctx.deleteMessage(); }
     catch (err) {
         console.log(err)
     }
@@ -117,9 +117,11 @@ bot.action(episodes, (ctx) => {
 
 })
 
-function sendStartMessage(ctx) {
+async function sendStartMessage(ctx) {
     let startMessage = 'Choose a season';
-    try { ctx.deleteMessage(); }
+    console.log(ctx)
+
+    try { await ctx.deleteMessage(); }
     catch (err) {
         console.log(err)
     }
