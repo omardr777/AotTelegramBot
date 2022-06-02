@@ -106,15 +106,15 @@ bot.action(episodes, (ctx) => {
     epId = epsID.find(e => e.episod === ep[0])
     if (epId != undefined)
         if (epId.type === 'mp4')
-            return ctx.telegram.sendVideo(ctx.chat.id, epId.id)
+            ctx.telegram.sendVideo(ctx.chat.id, epId.id)
 
         else
             ctx.telegram.sendDocument(ctx.chat.id, epId.id)
     else {//if epID is not defined
         ctx.reply('Sorry, coming soon..')
-        sendStartMessage(ctx)
-    }
 
+    }
+    sendStartMessage(ctx)
 })
 
 async function sendStartMessage(ctx) {
